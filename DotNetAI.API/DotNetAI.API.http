@@ -1,0 +1,54 @@
+@DotNetAI.API_HostAddress = http://localhost:5194
+
+POST {{DotNetAI.API_HostAddress}}/api/chat
+Content-Type: application/json
+
+{
+  "message": "Explain dependency injection in .NET in simple terms."
+}
+
+###
+
+POST {{DotNetAI.API_HostAddress}}/api/chat/analyze
+Content-Type: application/json
+
+{
+  "message": "Explain JWT authentication in ASP.NET Core."
+}
+
+###
+
+POST {{DotNetAI.API_HostAddress}}/api/knowledge/search
+Content-Type: application/json
+
+{
+  "query": "How does JWT authentication work?",
+  "topK": 3
+}
+
+###
+
+POST {{DotNetAI.API_HostAddress}}/api/knowledge/documents
+Content-Type: multipart/form-data; boundary=----DotNetAIBoundary
+
+------DotNetAIBoundary
+Content-Disposition: form-data; name="file"; filename="caching.txt"
+Content-Type: text/plain
+
+The Inventory API uses Redis for caching product lookups. Cache keys expire after five minutes.
+------DotNetAIBoundary--
+
+###
+
+GET {{DotNetAI.API_HostAddress}}/api/knowledge/documents
+
+###
+
+POST {{DotNetAI.API_HostAddress}}/api/chat/knowledge
+Content-Type: application/json
+
+{
+  "message": "How does JWT authentication work?"
+}
+
+###
