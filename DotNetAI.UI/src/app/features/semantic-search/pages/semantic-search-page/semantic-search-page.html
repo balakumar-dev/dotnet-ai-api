@@ -1,0 +1,42 @@
+<section>
+  <h1>Semantic Search</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <form class="search-form" (ngSubmit)="search()">
+        <mat-form-field appearance="outline">
+          <mat-label>Search knowledge</mat-label>
+          <input matInput [(ngModel)]="query" name="query" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="top-k">
+          <mat-label>Results</mat-label>
+          <input matInput type="number" min="1" max="50" [(ngModel)]="topK" name="topK" />
+        </mat-form-field>
+        <button matButton="filled" type="submit" [disabled]="searching() || !query.trim()">Search</button>
+      </form>
+
+      @if (searching()) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  @if (searched() && !searching() && !results().length && !error()) {
+    <p>No matching knowledge was found.</p>
+  }
+
+  <div class="results">
+    @for (result of results(); track result.chunkId) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ result.document }}</mat-card-title>
+          <mat-card-subtitle>Chunk {{ result.chunkId }} · Score {{ result.score | number:'1.3-3' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>{{ result.content }}</mat-card-content>
+      </mat-card>
+    }
+  </div>
+</section>

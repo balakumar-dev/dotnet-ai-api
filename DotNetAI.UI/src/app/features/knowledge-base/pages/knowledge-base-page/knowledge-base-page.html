@@ -1,0 +1,53 @@
+<section>
+  <div class="page-header">
+    <div>
+      <h1>Knowledge Base</h1>
+      <p>Upload and inspect documents available to semantic search and RAG chat.</p>
+    </div>
+    <button matButton="filled" type="button" (click)="fileInput.click()" [disabled]="uploading()">
+      <mat-icon>upload</mat-icon>
+      Upload document
+    </button>
+    <input #fileInput class="file-input" type="file" (change)="upload($event)" />
+  </div>
+
+  @if (uploading()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Uploading document"></mat-progress-bar>
+  }
+
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Loading documents"></mat-progress-bar>
+  } @else if (documents().length === 0) {
+    <mat-card>
+      <mat-card-content>No documents have been ingested yet.</mat-card-content>
+    </mat-card>
+  } @else {
+    <mat-card>
+      <mat-card-content>
+        <table mat-table [dataSource]="documents()">
+          <ng-container matColumnDef="fileName">
+            <th mat-header-cell *matHeaderCellDef>File</th>
+            <td mat-cell *matCellDef="let document">{{ document.fileName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="documentId">
+            <th mat-header-cell *matHeaderCellDef>Document ID</th>
+            <td mat-cell *matCellDef="let document">{{ document.documentId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="chunkCount">
+            <th mat-header-cell *matHeaderCellDef>Chunks</th>
+            <td mat-cell *matCellDef="let document">{{ document.chunkCount }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  }
+</section>
