@@ -1,0 +1,29 @@
+:host { display: block; }
+
+.search-form { display: grid; gap: 10px; grid-template-columns: 1fr 90px auto; }
+.search-form input, .top-k input {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font: inherit;
+  min-height: 44px;
+  padding: 0 12px;
+  width: 100%;
+}
+.top-k { color: var(--muted); font-size: 12px; }
+.top-k input { margin-top: 4px; text-align: center; }
+
+.results { display: grid; gap: 12px; margin-top: 20px; }
+.result-card {
+  background: #f7f9fd;
+  border-left: 3px solid var(--blue);
+  border-radius: 8px;
+  padding: 16px;
+}
+.result-meta { display: flex; justify-content: space-between; gap: 12px; }
+.result-meta span { color: var(--blue); font-family: monospace; }
+.result-card p { line-height: 1.65; margin-bottom: 0; white-space: pre-wrap; }
+
+@media (max-width: 700px) {
+  .search-form { grid-template-columns: 1fr; }
+}

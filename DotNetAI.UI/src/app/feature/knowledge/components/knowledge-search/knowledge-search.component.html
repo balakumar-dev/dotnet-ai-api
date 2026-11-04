@@ -1,0 +1,37 @@
+<section class="panel">
+  <p class="section-label">3. Find answers</p>
+  <h2>Search knowledge</h2>
+  <form class="search-form" (ngSubmit)="search()">
+    <input
+      aria-label="Search query"
+      name="query"
+      [(ngModel)]="query"
+      placeholder="Ask a question or enter keywords..."
+    />
+    <label class="top-k">
+      Results
+      <input name="topK" type="number" min="1" max="20" [(ngModel)]="topK" />
+    </label>
+    <button type="submit" class="primary" [disabled]="searching">
+      {{ searching ? 'Searching...' : 'Search' }}
+    </button>
+  </form>
+
+  <div class="results">
+    @for (match of matches; track match.chunkId) {
+      <article class="result-card">
+        <div class="result-meta">
+          <strong>{{ match.document }}</strong>
+          <span>{{ match.score | number:'1.2-4' }}</span>
+        </div>
+        <p>{{ match.content }}</p>
+      </article>
+    }
+    @if (!searching && hasSearched && matches.length === 0) {
+      <div class="empty-state">No results found for your query.</div>
+    }
+    @if (!hasSearched) {
+      <div class="empty-state">Search results will appear here.</div>
+    }
+  </div>
+</section>

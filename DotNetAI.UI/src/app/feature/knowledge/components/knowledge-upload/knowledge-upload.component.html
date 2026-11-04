@@ -1,0 +1,15 @@
+<section class="panel upload-panel">
+  <div>
+    <p class="section-label">1. Add documents</p>
+    <h2>Upload knowledge</h2>
+  </div>
+  <div class="upload-controls">
+    <label class="file-picker">
+      <span>{{ selectedFile ? selectedFile.name : 'Choose a document' }}</span>
+      <input type="file" accept=".pdf,.txt,.docx,.md" (change)="onFileSelected($event)" />
+    </label>
+    <button type="button" class="primary" (click)="upload()" [disabled]="uploading">
+      {{ uploading ? 'Uploading...' : 'Upload' }}
+    </button>
+  </div>
+</section>
