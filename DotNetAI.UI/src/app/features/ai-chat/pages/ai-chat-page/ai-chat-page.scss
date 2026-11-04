@@ -1,0 +1,298 @@
+// Break out of main's 24px padding so the chat fills edge-to-edge
+:host {
+  display: block;
+  height: 100%;
+}
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: -24px;
+  width: calc(100% + 48px);
+}
+
+// ── Header ─────────────────────────────────────────────────────────────────
+
+.chat-header {
+  align-items: center;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  padding: 8px 24px;
+}
+
+.mode-select {
+  width: 220px;
+}
+
+// ── Conversation ────────────────────────────────────────────────────────────
+
+.conversation {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px 24px;
+  scroll-behavior: smooth;
+}
+
+// Inner content centred to 760px like ChatGPT
+.conversation-inner {
+  margin: 0 auto;
+  max-width: 760px;
+}
+
+// ── Welcome screen ──────────────────────────────────────────────────────────
+
+.welcome {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 55vh;
+  text-align: center;
+}
+
+.welcome h1 {
+  background: var(--rb-gradient-h);
+  background-clip: text;
+  background-size: 200% auto;
+  animation: rainbow-shift 6s linear infinite;
+  font-size: 30px;
+  margin-bottom: 8px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcome p {
+  margin-bottom: 24px;
+}
+
+.assistant-mark {
+  align-items: center;
+  animation: aurora-pulse 2.5s ease-in-out infinite;
+  background: var(--rb-gradient);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(114, 9, 183, 0.35), 0 0 40px rgba(76, 201, 240, 0.2);
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  margin-bottom: 16px;
+  width: 56px;
+}
+
+.assistant-mark mat-icon {
+  color: #fff;
+  font-size: 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 640px;
+}
+
+.suggestion-chip {
+  background: var(--mat-sys-surface-container-high);
+  border: 1.5px solid transparent;
+  border-radius: 20px;
+  color: var(--mat-sys-on-surface);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 16px;
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  // Gradient border via background-origin trick
+  background-clip: padding-box;
+
+  &::before {
+    border-radius: inherit;
+    content: '';
+    inset: -1.5px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+// Assign a unique rainbow accent border per chip position
+.suggestion-chip:nth-child(1)::before { background: linear-gradient(135deg, #ff6b6b, #ff9a3c); }
+.suggestion-chip:nth-child(2)::before { background: linear-gradient(135deg, #4cc9f0, #4361ee); }
+.suggestion-chip:nth-child(3)::before { background: linear-gradient(135deg, #06d6a0, #4cc9f0); }
+.suggestion-chip:nth-child(4)::before { background: linear-gradient(135deg, #b67ef5, #7209b7); }
+
+// ── Message rows ─────────────────────────────────────────────────────────────
+
+.message-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.message-row.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  flex: 0 0 36px;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.message-row.user .avatar {
+  background: linear-gradient(135deg, #4cc9f0, #4361ee);
+}
+
+.message-row:not(.user) .avatar {
+  background: var(--rb-gradient);
+}
+
+.avatar mat-icon {
+  color: #fff;
+}
+
+.message-content {
+  max-width: calc(100% - 50px);
+}
+
+.message-row.user .message-content {
+  background: var(--mat-sys-surface-container-high);
+  border-radius: 18px;
+  padding: 4px 16px 10px;
+}
+
+.message-content p {
+  line-height: 1.6;
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+}
+
+// ── Analysis card (inside conversation) ────────────────────────────────────
+
+.analysis {
+  margin-bottom: 20px;
+}
+
+// ── Error ────────────────────────────────────────────────────────────────────
+
+.error {
+  color: var(--mat-sys-error);
+  text-align: center;
+}
+
+// ── Typing indicator ─────────────────────────────────────────────────────────
+
+.typing {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  height: 36px;
+}
+
+.typing span {
+  animation: float-dot 1s infinite;
+  border-radius: 50%;
+  height: 7px;
+  width: 7px;
+}
+
+.typing span:nth-child(1) { animation-delay: 0s;    background: var(--rb-red);   }
+.typing span:nth-child(2) { animation-delay: 0.18s; background: var(--rb-green); }
+.typing span:nth-child(3) { animation-delay: 0.36s; background: var(--rb-cyan);  }
+
+@keyframes float-dot {
+  0%, 100% { opacity: 1;   transform: translateY(0);    }
+  50%       { opacity: 0.3; transform: translateY(-5px); }
+}
+
+// ── Composer ────────────────────────────────────────────────────────────────
+
+.composer-area {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  margin: 0 auto;
+  max-width: 760px + 48px; // 760 content + 24px side padding × 2
+  padding: 12px 24px 16px;
+  width: 100%;
+}
+
+.composer {
+  align-items: flex-end;
+  background: var(--mat-sys-surface-container-high);
+  border: 1.5px solid var(--mat-sys-outline-variant);
+  border-radius: 26px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus-within {
+    border-color: transparent;
+    box-shadow:
+      0 4px 20px rgb(0 0 0 / 12%),
+      0 0 0 1.5px transparent;
+    outline: 1.5px solid;
+    outline-color: transparent;
+    background-image: var(--rb-gradient);
+    background-origin: border-box;
+    // Gradient border trick
+    background-clip: padding-box;
+    position: relative;
+
+    &::before {
+      background: var(--rb-gradient);
+      border-radius: inherit;
+      content: '';
+      inset: -1.5px;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+}
+
+.composer textarea {
+  background: transparent;
+  border: 0;
+  flex: 1;
+  font: inherit;
+  max-height: 200px;
+  min-height: 24px;
+  outline: 0;
+  overflow-y: auto;
+  padding: 10px 12px;
+  resize: none;
+}
+
+.send-button {
+  background: linear-gradient(135deg, #7209b7, #4cc9f0) !important;
+  color: #fff !important;
+  transition: box-shadow 0.2s, transform 0.15s !important;
+
+  &:not([disabled]):hover {
+    box-shadow: 0 4px 16px rgba(114, 9, 183, 0.4) !important;
+    transform: scale(1.06);
+  }
+}
+
+.composer-area small {
+  display: block;
+  margin-top: 8px;
+  opacity: 0.6;
+  text-align: center;
+}

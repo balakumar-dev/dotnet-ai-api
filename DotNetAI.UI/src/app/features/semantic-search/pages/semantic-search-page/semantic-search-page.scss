@@ -1,0 +1,60 @@
+// ── Page title ───────────────────────────────────────────────────────────────
+
+h1 {
+  animation: rainbow-shift 6s linear infinite;
+  background: linear-gradient(90deg, #ff9a3c, #ff6b6b, #b67ef5);
+  background-clip: text;
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// ── Search form ───────────────────────────────────────────────────────────────
+
+.search-form {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+}
+
+.search-form mat-form-field:first-child {
+  flex: 1;
+}
+
+.top-k {
+  width: 110px;
+}
+
+// ── Results grid ──────────────────────────────────────────────────────────────
+
+.results {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+// Result cards: rainbow left border per position, colored subtitle score
+.results mat-card {
+  border-left: 3px solid transparent;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateX(3px);
+  }
+}
+
+.results mat-card:nth-child(6n+1) { border-left-color: var(--rb-red);    }
+.results mat-card:nth-child(6n+2) { border-left-color: var(--rb-orange);  }
+.results mat-card:nth-child(6n+3) { border-left-color: var(--rb-green);   }
+.results mat-card:nth-child(6n+4) { border-left-color: var(--rb-cyan);    }
+.results mat-card:nth-child(6n+5) { border-left-color: var(--rb-blue);    }
+.results mat-card:nth-child(6n+6) { border-left-color: var(--rb-violet);  }
+
+// ── Error ─────────────────────────────────────────────────────────────────────
+
+.error {
+  color: var(--mat-sys-error);
+}

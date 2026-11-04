@@ -1,5 +1,24 @@
 # DotNetAIUI
 
+## Frontend architecture
+
+The Angular application uses a feature-oriented standalone-component architecture.
+
+- `core`: application-wide authentication, authorization, HTTP infrastructure, configuration, logging, and error handling.
+- `shared`: reusable presentation components and utilities with no feature-specific business logic.
+- `layout`: authenticated and authentication application shells.
+- `features`: independently lazy-loaded business capabilities.
+- `features/<feature>/pages`: smart/container components.
+- `features/<feature>/components`: feature-specific reusable components.
+- `features/<feature>/services`: feature workflow and orchestration.
+- `features/<feature>/data-access`: backend API repositories and HTTP DTOs.
+- `features/<feature>/models`: feature DTOs and domain models.
+- `features/<feature>/state`: feature state only when complexity requires it.
+
+Application routes are defined centrally and delegate feature routing to lazy-loaded route files. HTTP communication is centralized through Core services and will use environment-based configuration. Sensitive AI-provider, database, and vector operations must be performed only by secured backend APIs.
+
+Angular Signals are preferred for local UI state, RxJS for HTTP and asynchronous streams, and NgRx will only be introduced if shared application state justifies it.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.
 
 ## Development server

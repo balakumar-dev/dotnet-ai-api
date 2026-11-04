@@ -1,0 +1,16 @@
+@if (loading()) {
+  <div class="page-state" role="status">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading...</span>
+  </div>
+} @else {
+  <div class="page-state">
+    @if (title()) {
+      <h2>{{ title() }}</h2>
+    }
+    @if (message()) {
+      <p>{{ message() }}</p>
+    }
+    <ng-content />
+  </div>
+}

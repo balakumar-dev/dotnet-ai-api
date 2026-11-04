@@ -1,0 +1,124 @@
+:host,
+mat-sidenav-container {
+  display: block;
+  height: 100%;
+}
+
+// ── Sidenav — dark themed ────────────────────────────────────────────────────
+
+mat-sidenav {
+  width: 260px;
+
+  // Material 3 token overrides for dark background
+  --mat-sidenav-container-background-color: #111827;
+  --mat-sidenav-container-text-color:       rgba(255, 255, 255, 0.85);
+  --mat-sidenav-container-divider-color:    transparent;
+  --mat-list-list-item-label-text-color:       rgba(255, 255, 255, 0.65);
+  --mat-list-list-item-hover-state-layer-color: rgba(255, 255, 255, 0.08);
+  --mat-list-list-item-focus-state-layer-color: rgba(255, 255, 255, 0.08);
+  --mat-list-list-item-ripple-color:            rgba(255, 255, 255, 0.06);
+
+  // Rainbow right border
+  border-right: 2px solid transparent !important;
+  border-image: linear-gradient(to bottom, #ff6b6b, #ff9a3c, #ffd166, #06d6a0, #4cc9f0, #7209b7) 1 !important;
+}
+
+// ── Brand — animated rainbow gradient text ───────────────────────────────────
+
+.brand {
+  align-items: center;
+  animation: rainbow-shift 5s linear infinite;
+  background: linear-gradient(90deg, #ff6b6b, #ff9a3c, #ffd166, #06d6a0, #4cc9f0, #7209b7);
+  background-clip: text;
+  background-size: 200% auto;
+  display: flex;
+  font-size: 22px;
+  font-weight: 800;
+  height: 64px;
+  letter-spacing: 1px;
+  padding-inline: 24px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// ── Nav list ─────────────────────────────────────────────────────────────────
+
+mat-nav-list {
+  padding: 8px !important;
+}
+
+a[mat-list-item] {
+  border-radius: 10px !important;
+  margin-bottom: 2px;
+  position: relative;
+  transition: background 0.18s !important;
+}
+
+// Section-specific icon colors
+a[routerLink='/'] mat-icon            { color: var(--color-dashboard) !important; }
+a[routerLink='/chat'] mat-icon        { color: var(--color-chat)      !important; }
+a[routerLink='/knowledge'] mat-icon   { color: var(--color-knowledge) !important; }
+a[routerLink='/search'] mat-icon      { color: var(--color-search)    !important; }
+
+// Active state: tinted background + colored left accent bar
+.active {
+  background: rgba(255, 255, 255, 0.1) !important;
+
+  &::before {
+    animation: aurora-pulse 2s ease-in-out infinite;
+    border-radius: 0 3px 3px 0;
+    content: '';
+    height: 55%;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+  }
+}
+
+a[routerLink='/'].active::before          { background: var(--color-dashboard); }
+a[routerLink='/chat'].active::before      { background: var(--color-chat);      }
+a[routerLink='/knowledge'].active::before { background: var(--color-knowledge); }
+a[routerLink='/search'].active::before    { background: var(--color-search);    }
+
+// ── Toolbar — dark with animated rainbow bottom border ───────────────────────
+
+mat-toolbar {
+  --mat-toolbar-container-background-color: #111827;
+  --mat-toolbar-container-text-color: #fff;
+
+  border-bottom: none !important;
+  position: relative;
+
+  &::after {
+    animation: rainbow-shift 4s linear infinite;
+    background: linear-gradient(90deg, #ff6b6b, #ff9a3c, #ffd166, #06d6a0, #4cc9f0, #7209b7);
+    background-size: 200% auto;
+    bottom: 0;
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
+
+  button mat-icon {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  > span {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+}
+
+// ── Main content ──────────────────────────────────────────────────────────────
+
+main {
+  box-sizing: border-box;
+  height: calc(100% - 64px);
+  overflow: auto;
+  padding: 24px;
+}

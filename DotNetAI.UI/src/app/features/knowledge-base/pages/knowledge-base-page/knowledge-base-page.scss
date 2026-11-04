@@ -1,0 +1,47 @@
+// ── Page title ───────────────────────────────────────────────────────────────
+
+h1 {
+  animation: rainbow-shift 6s linear infinite;
+  background: linear-gradient(90deg, #06d6a0, #4cc9f0, #4361ee);
+  background-clip: text;
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// ── Page header layout ────────────────────────────────────────────────────────
+
+.page-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+
+  // Gradient upload button
+  button[matbutton] {
+    background: linear-gradient(135deg, #06d6a0, #4cc9f0) !important;
+    color: #fff !important;
+  }
+}
+
+.file-input {
+  display: none;
+}
+
+// ── Error ─────────────────────────────────────────────────────────────────────
+
+.error {
+  color: var(--mat-sys-error);
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────────
+
+table {
+  width: 100%;
+}
+
+th[mat-header-cell] {
+  color: var(--color-knowledge) !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
