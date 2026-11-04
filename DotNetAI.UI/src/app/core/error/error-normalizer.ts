@@ -4,14 +4,22 @@ import { AppError } from './app-error';
 
 export function normalizeHttpError(error: unknown): AppError {
   if (error instanceof HttpErrorResponse) {
+    const serverMessage =
+      typeof error.error?.message === 'string'
+        ? error.error.message
+        : typeof error.error?.error === 'string'
+          ? error.error.error
+          : typeof error.error === 'string'
+            ? error.error
+            : undefined;
+
     return {
       title: error.status === 0 ? 'Service unavailable' : 'Request failed',
       message:
-        typeof error.error?.message === 'string'
-          ? error.error.message
-          : error.status === 0
-            ? 'The service could not be reached.'
-            : 'The requested operation could not be completed.',
+        serverMessage ??
+        (error.status === 0
+          ? 'The service could not be reached.'
+          : 'The requested operation could not be completed.'),
       status: error.status,
     };
   }
